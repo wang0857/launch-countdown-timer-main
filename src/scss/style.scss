@@ -1,0 +1,314 @@
+/* Overall Setting */
+@import './_variables.scss';
+
+/* Font */
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Text:wght@700&display=swap');
+
+body {
+    background-color: $dark-blue;
+    background-image: url('/src/images/bg-stars.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    min-width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0px;
+    padding: 0px;
+
+    & > * {
+        font-family: 'Red Hat Text', sans-serif;
+        font-size: 14px;
+        color: $grayish-blue;
+    }
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    margin: 0px;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-width: 100vw;
+    min-height: 100vh; // To make the flex grow work
+}
+
+
+/* Header */
+
+header {
+    padding: 140px 0px 110px;
+}
+
+h1 {
+    color: $white;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 1.2em;
+    letter-spacing: 9px;
+}
+
+
+/* Countdown Timer */
+
+.countdownTimer {
+    &-container {
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+    }
+
+    &-timer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+
+        &-time {
+            text-transform: uppercase;
+            letter-spacing: 7px;
+        }
+    }
+}
+
+.flip-card {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0px 10px 1px $deep-blue;
+
+    &-top,
+    &-bottom {
+        position: relative;
+    }
+
+    &-top,
+    &-bottom,
+    .flip-top,
+    .flip-bottom {
+        box-sizing: border-box;
+        height: 70px;
+        width: 146px;
+        text-align: center;
+        line-height: 1;
+        font-size: 60px;
+        overflow: hidden;
+    }
+
+    &-top,
+    .flip-top {
+        background-color: hsl(240, 21%, 22%);
+        padding-top: 40px;
+        color: hsl(345, 60%, 57%);
+        position: relative;
+        border-radius: $sm $sm 0px 0px;
+
+        // Inner concave
+        &::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background-color: $dark-blue;
+            border-radius: $xlg;
+            position: absolute;
+            left: -5px;
+            bottom: -5px;
+        }
+
+        &::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background-color: $dark-blue;
+            border-radius: $xlg;
+            position: absolute;
+            right: -5px;
+            bottom: -5px;
+        }
+    }
+
+    &-bottom,
+    .flip-bottom {
+        background-color: $desaturated-blue;
+        padding-bottom: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end; // @Hack: Make the bottom number align to the upper number mirrorly
+        color: $soft-red;
+        border-radius: 0px 0px $sm $sm;
+
+        // Inner concave
+        &::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background-color: $dark-blue;
+            border-radius: $xlg;
+            position: absolute;
+            left: -5px;
+            top: -5px;
+        }
+
+        &::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background-color: $dark-blue;
+            border-radius: $xlg;
+            position: absolute;
+            right: -5px;
+            top: -5px;
+        }
+    }
+
+    /* Animation */
+    /* Should not be longer than 1s */
+    /* Otherwise the appended div couldn't be remove before the next animation */
+    .flip-top {
+        position: absolute;
+        animation: flipTop .2s ease-in;
+        z-index: 1;
+        transform-origin: bottom; // @Hack: Fixed the bottom axis
+    }
+
+    .flip-bottom {
+        position: absolute;
+        bottom: 0px;
+        animation: flipBottom .2s ease-out .2s; // @Hack: Start to flip after the upper card flips
+        z-index: 1;
+        transform-origin: top; // @Hack: Fixed the top axis
+        transform: rotateX(90deg);
+    }
+}
+
+@keyframes flipTop {
+    100% {
+        transform: rotateX(90deg);
+    }
+}
+
+@keyframes flipBottom {
+    100% {
+        transform: rotateX(0deg);
+    }
+}
+
+
+/* Footer */
+
+footer {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 100px 0px 70px;
+    background-image: url('/src/images/pattern-hills.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    a {
+        color: $grayish-blue;
+        transition: $transition;
+
+        &:hover {
+            color: $soft-red;
+        }
+        
+        i.fa-brands {
+            font-size: 28px;
+        }
+    }
+}
+
+// TODO: Mobile version
+
+@media screen and (max-width: 768px) {
+    .app-container {
+        align-items: center;
+    }
+
+    header {
+        width: 324px;
+        padding: 146px 0px 60px;
+    }
+
+    .countdownTimer {
+        &-container {
+            width: 324px;
+            gap: $md;
+        }
+
+        &-timer {
+            gap: $md;
+
+            &-time {
+                font-size: 6px;
+                letter-spacing: 4px;
+            }
+        }
+    }
+
+    .flip-card {
+        box-shadow: 0px 5px 1px $deep-blue;
+
+        &-top,
+        &-bottom,
+        .flip-top,
+        .flip-bottom {
+            height: 34px;
+            width: 70px;
+            font-size: 28px;
+        }
+
+        &-top,
+        .flip-top {
+            padding-top: $lg;
+            border-radius: $xs $xs 0px 0px;
+    
+            // Inner concave
+            &::before {
+                width: 7px;
+                height: 7px;
+                left: -3px;
+                bottom: -3px;
+            }
+    
+            &::after {
+                width: 7px;
+                height: 7px;
+                right: -3px;
+                bottom: -3px;
+            }
+        }
+
+        &-bottom,
+        .flip-bottom {
+            padding-bottom: $lg;
+            border-radius: 0px 0px $xs $xs;
+
+            // Inner concave
+            &::before {
+                width: 7px;
+                height: 7px;
+                left: -3px;
+                top: -3px;
+            }
+
+            &::after {
+                width: 7px;
+                height: 7px;
+                right: -3px;
+                top: -3px;
+            }
+        }
+    }
+
+    footer {
+        min-width: 100vw;
+        padding: 160px 0px 48px;
+        background-position: bottom 0% right 15%;
+    }
+}
