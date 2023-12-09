@@ -25,6 +25,7 @@ Users should be able to:
 ### Screenshot
 
 ![launch-countdown-timer-desktop](./src/screenshots/launch-countdown-timer-desktop.png)
+![launch-countdown-timer-flipping-cards](./src/screenshots/launch-countdown-timer-flipping-cards.gif)
 ![launch-countdown-timer-mobile](./src/screenshots/launch-countdown-timer-mobile.png)
 
 
